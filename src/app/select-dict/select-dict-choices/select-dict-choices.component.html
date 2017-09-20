@@ -1,0 +1,15 @@
+<div class="dropdown-menu show"
+     style="position: absolute;
+       transform: translate3d(0px, 38px, 0px);
+       top: 0px;
+       left: 0px;
+       will-change: transform;">
+  {{active?.id}}
+  <a class="dropdown-item hide-overflowed-text" [appHighlightChoice]="item?.id === active?.id" *ngFor="let item of choices" (click)="selectItem($event, item)">
+    <ng-template
+      [ngTemplateOutlet]="template"
+      [ngOutletContext]="{$implicit: item}">
+    </ng-template>
+  </a>
+
+</div>

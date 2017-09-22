@@ -6,27 +6,37 @@
          appSelectMatch
          [focus]="focusMatch"
          [hidden]="opened"
-         (keydown)="onMatchKeyPress($event)"
+         (keydown.enter)="onOpen()"
          (click)="onOpen($event)">
       <ng-template *ngIf="selected"
-        [ngTemplateOutlet]="matchTemplate"
-        [ngOutletContext]="{$implicit: selected}">
+                   [ngTemplateOutlet]="matchTemplate"
+                   [ngOutletContext]="{$implicit: selected}">
       </ng-template>
       <span *ngIf="!selected">{{'Выберите вариант из списка'}}</span>
     </div>
     <input
       *ngIf="opened"
+      #searchInput
       class="form-control"
       appSelectSearch
-      (keydown)="onSearchKeyPress($event)">
-    {{opened}}
+      [focus]="focusSearch"
+      (keyup)="onSearch(searchInput.value)"
+      (keydown.enter)="selectHighlighted()"
+      (keydown.arrowup)="activatePrev()"
+      (keydown.arrowdown)="activateNext()">
     <app-select-dict-choices
       *ngIf="opened"
       [choices]="items"
+      [indexBy]="indexBy"
+      [search]="search"
+      [showPreviousPageButton]="longList && page !== 0"
+      [showNextPageButton]="longList && !(items?.length < listSize)"
       [active]="active"
       [activeIndex]="activeIndex"
       [template]="choicesTemplate"
       (onSelect)="onSelect($event)"
+      (nextPage)="getNextPage()"
+      (prevPage)="getPrevPage()"
     ></app-select-dict-choices>
 
   </div>

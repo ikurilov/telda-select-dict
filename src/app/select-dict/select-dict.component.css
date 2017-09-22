@@ -1,0 +1,17 @@
+.select-dict div.form-control {
+  cursor: pointer;
+  padding-right: 38px;
+  overflow-x: hidden;
+}
+
+.select-dict .dropdown-toggle:after {
+  position: absolute;
+  top: 17px;
+  right: 15px;
+}
+
+.select-dict .hide-overflowed-text {
+  overflow-x: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

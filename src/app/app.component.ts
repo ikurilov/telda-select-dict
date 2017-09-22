@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 
 @Component({
   selector: 'app-root',
@@ -7,17 +7,29 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
 
-  items = [
-    {id: 1},
-    {id: 2},
-    {id: 3},
-    {id: 4},
-    {id: 5},
-    {id: 6},
-    {id: 7},
-    {id: 8},
-    {id: 9}
-  ];
-
-  selectedItem = {id: 4, nameM: 'test' };
+  selectedItem = {
+    "id": 23618,
+    "name": "\"Дорожник\" сад.",
+    "municipality": {
+      "id": 23399,
+      "sortedName": "Садоводческий массив",
+      "nameM": "Садоводческий массив",
+      "type": {"id": 4, "name": "массив"},
+      "district": {"id": 2, "name": "Волосовский"},
+      "primaryElemName": null,
+      "primaryElemAbbrev": null,
+      "primaryElemList": null,
+      "primaryElemNotes": null,
+      "s": 0,
+      "nameP": "Садоводческий массив",
+      "nameN": "Садоводческий массив",
+      "moId": null
+    },
+    "directionEntity": null,
+    "type": {"id": 6, "name": "садоводство"},
+    "nameM": "сад.\"Дорожник\"",
+    "nameP": "сад.\"Дорожник\"",
+    "nameN": "\"Дорожник\" сад.",
+    "sk": null
+  };
 }

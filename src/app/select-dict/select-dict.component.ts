@@ -4,6 +4,7 @@ import {
 import {findIndex} from 'lodash/array';
 import {find} from 'lodash/collection';
 import {cloneDeep} from 'lodash/lang';
+import {assign} from 'lodash/object'
 
 import {Subject} from 'rxjs/Subject';
 import {Http} from '@angular/http';
@@ -36,6 +37,9 @@ export class SelectDictComponent implements OnInit, ControlValueAccessor {
   @Input() url;
   @Input() indexBy = 'id';
   @Input() filterBy = 'name';
+  @Input() label: string;
+  @Input() placeholder: string;
+  @Input() options;
 
   dictFilter = new SelectDictPipe();
 
@@ -157,28 +161,27 @@ export class SelectDictComponent implements OnInit, ControlValueAccessor {
       count: this.listSize,
       from: this.page * this.listSize
     };
-    return this.http.get(this.url, {
-      withCredentials: true,
-      params
-    }).map(result => result.json()).subscribe((container: IDictListContainer) => {
-      if (this.initialQuery) {
-        this.initialQuery = false;
-        this.longList = container.total < 0 || container.total > container.size;
-      }
-      this._items = container.list;
-      this.items = cloneDeep(this._items);
 
-      this.lastRemoteSearch = <string>params[this.filterBy];
-      this.allInMemory = this.page === 0 && container.size < this.listSize;
-      if (this.active) {
-        this.activeIndex = this.getActiveIndex();
-      }
-      else {
-        this.activeIndex = -1;
-      }
-      this.choicesComponent.scrollToTop();
-      this.choicesComponent._ensureHighlightVisible();
-    });
+    assign(params, this.options);
+
+    return this.http.get(this.url, {withCredentials: true, params})
+      .map(result => result.json())
+      .subscribe((container: IDictListContainer) => {
+        if (this.initialQuery) {
+          this.initialQuery = false;
+          this.longList = container.total < 0 || container.total > container.size;
+        }
+        this._items = container.list;
+        this.items = cloneDeep(this._items);
+
+        this.lastRemoteSearch = <string>params[this.filterBy];
+        this.allInMemory = this.page === 0 && container.size < this.listSize;
+
+        this.activeIndex = this.active ? this.getActiveIndex() : -1;
+
+        this.choicesComponent.scrollToTop();
+        this.choicesComponent._ensureHighlightVisible();
+      });
 
 
   }
@@ -202,7 +205,6 @@ export class SelectDictComponent implements OnInit, ControlValueAccessor {
         this.activeIndex = 'prevPage';
       }
       else if (itemsLength) {
-        this.active = this.items[0];
         this.activeIndex = 0;
       }
     }

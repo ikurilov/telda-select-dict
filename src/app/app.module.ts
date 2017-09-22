@@ -4,7 +4,6 @@ import {AppComponent} from './app.component';
 import {SelectDictModule} from './select-dict/select-dict.module';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
-
 @NgModule({
   declarations: [
     AppComponent,

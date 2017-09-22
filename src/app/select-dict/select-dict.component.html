@@ -1,5 +1,5 @@
 <div class="form-group">
-  <label>Email address</label>
+  <label>{{label}}</label>
   <div class="select-dict dropdown">
     <div class="form-control dropdown-toggle hide-overflowed-text"
          tabindex="0"
@@ -12,7 +12,7 @@
                    [ngTemplateOutlet]="matchTemplate"
                    [ngOutletContext]="{$implicit: selected}">
       </ng-template>
-      <span *ngIf="!selected">{{'Выберите вариант из списка'}}</span>
+      <span *ngIf="!selected">{{placeholder || label}}</span>
     </div>
     <input
       *ngIf="opened"
@@ -38,6 +38,5 @@
       (nextPage)="getNextPage()"
       (prevPage)="getPrevPage()"
     ></app-select-dict-choices>
-
   </div>
 </div>

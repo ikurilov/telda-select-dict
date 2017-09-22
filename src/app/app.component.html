@@ -13,7 +13,13 @@
       <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
     </div>
 
-    <app-select-dict [url]="'http://172.16.6.184:8080/bti/rest/dict/settlement'" [(ngModel)]="selectedItem">
+    <app-select-dict
+      [url]="'http://172.16.6.184:8080/bti/rest/dict/settlement'"
+      [(ngModel)]="selectedItem"
+      [options]="{order: 'name'}"
+      label="Город"
+      placeholder="Город не выбран"
+    >
       <ng-template let-selected #selectMatch>
         <span [title]="selected?.nameM">{{selected?.nameM}}</span>
       </ng-template>

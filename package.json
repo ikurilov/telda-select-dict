@@ -1,6 +1,6 @@
 {
   "name": "select-dict",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "license": "MIT",
   "scripts": {
     "ng": "ng",
@@ -8,7 +8,8 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "ngc-compile": "ngc -p ./tsconfig-ngc.json"
   },
   "private": true,
   "dependencies": {
@@ -31,6 +32,7 @@
     "@angular/cli": "1.4.2",
     "@angular/compiler-cli": "^4.2.4",
     "@angular/language-service": "^4.2.4",
+    "@types/core-js": "^0.9.43",
     "@types/jasmine": "~2.5.53",
     "@types/jasminewd2": "~2.0.2",
     "@types/node": "~6.0.60",
@@ -48,5 +50,5 @@
     "tslint": "~5.3.2",
     "typescript": "~2.3.3"
   },
-  "main": "src/app/select-dict/select-dict.module.ts"
+  "main": "dist/select-dict.module.js"
 }

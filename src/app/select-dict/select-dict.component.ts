@@ -13,6 +13,7 @@ import 'rxjs/add/operator/toPromise'
 import {SelectDictChoicesComponent} from './select-dict-choices/select-dict-choices.component';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {SelectDictPipe} from './select-dict.pipe';
+import {Subscription} from 'rxjs/Subscription';
 
 interface IDictListContainer {
   total: number;
@@ -155,7 +156,7 @@ export class SelectDictComponent implements OnInit, ControlValueAccessor {
     this.setActiveItem('prev');
   }
 
-  request() {
+  request(): Subscription {
     let params = {
       [this.filterBy]: this.search,
       count: this.listSize,

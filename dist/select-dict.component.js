@@ -1,25 +1,23 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-const core_1 = require("@angular/core");
-const array_1 = require("lodash/array");
-const lang_1 = require("lodash/lang");
-const object_1 = require("lodash/object");
-const Subject_1 = require("rxjs/Subject");
-const http_1 = require("@angular/http");
-require("rxjs/add/operator/map");
-require("rxjs/add/operator/toPromise");
-const select_dict_choices_component_1 = require("./select-dict-choices/select-dict-choices.component");
-const forms_1 = require("@angular/forms");
-const select_dict_pipe_1 = require("./select-dict.pipe");
-class SelectDictComponent {
+import { Component, ContentChild, ElementRef, forwardRef, HostListener, Input, ViewChild } from '@angular/core';
+import { findIndex } from 'lodash/array';
+import { cloneDeep } from 'lodash/lang';
+import { assign } from 'lodash/object';
+import { Subject } from 'rxjs/Subject';
+import { Http } from '@angular/http';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/toPromise';
+import { SelectDictChoicesComponent } from './select-dict-choices/select-dict-choices.component';
+import { NG_VALUE_ACCESSOR } from '@angular/forms';
+import { SelectDictPipe } from './select-dict.pipe';
+export class SelectDictComponent {
     constructor(eRef, http) {
         this.eRef = eRef;
         this.http = http;
         this.indexBy = 'id';
         this.filterBy = 'name';
-        this.dictFilter = new select_dict_pipe_1.SelectDictPipe();
-        this.focusMatch = new Subject_1.Subject();
-        this.focusSearch = new Subject_1.Subject();
+        this.dictFilter = new SelectDictPipe();
+        this.focusMatch = new Subject();
+        this.focusSearch = new Subject();
         this.items = [];
         this._items = [];
         this.active = null;
@@ -107,7 +105,7 @@ class SelectDictComponent {
             count: this.listSize,
             from: this.page * this.listSize
         };
-        object_1.assign(params, this.options);
+        assign(params, this.options);
         return this.http.get(this.url, { withCredentials: true, params })
             .map(result => result.json())
             .subscribe((container) => {
@@ -116,7 +114,7 @@ class SelectDictComponent {
                 this.longList = container.total < 0 || container.total > container.size;
             }
             this._items = container.list;
-            this.items = lang_1.cloneDeep(this._items);
+            this.items = cloneDeep(this._items);
             this.lastRemoteSearch = params[this.filterBy];
             this.allInMemory = this.page === 0 && container.size < this.listSize;
             this.activeIndex = this.active ? this.getActiveIndex() : -1;
@@ -176,7 +174,7 @@ class SelectDictComponent {
         this.active = this.activeIndex !== -1 && typeof this.activeIndex !== 'string' ? this.items[this.activeIndex] : null;
     }
     getActiveIndex() {
-        return array_1.findIndex(this.items, item => item[this.indexBy] === this.active[this.indexBy]);
+        return findIndex(this.items, item => item[this.indexBy] === this.active[this.indexBy]);
     }
     writeValue(value) {
         this.selected = value;
@@ -195,14 +193,14 @@ class SelectDictComponent {
     ;
 }
 SelectDictComponent.decorators = [
-    { type: core_1.Component, args: [{
+    { type: Component, args: [{
                 selector: 'app-select-dict',
                 templateUrl: './select-dict.component.html',
                 styleUrls: ['./select-dict.component.css'],
                 providers: [
                     {
-                        provide: forms_1.NG_VALUE_ACCESSOR,
-                        useExisting: core_1.forwardRef(() => SelectDictComponent),
+                        provide: NG_VALUE_ACCESSOR,
+                        useExisting: forwardRef(() => SelectDictComponent),
                         multi: true
                     }
                 ]
@@ -210,21 +208,20 @@ SelectDictComponent.decorators = [
 ];
 /** @nocollapse */
 SelectDictComponent.ctorParameters = () => [
-    { type: core_1.ElementRef, },
-    { type: http_1.Http, },
+    { type: ElementRef, },
+    { type: Http, },
 ];
 SelectDictComponent.propDecorators = {
-    'selected': [{ type: core_1.Input },],
-    'url': [{ type: core_1.Input },],
-    'indexBy': [{ type: core_1.Input },],
-    'filterBy': [{ type: core_1.Input },],
-    'label': [{ type: core_1.Input },],
-    'placeholder': [{ type: core_1.Input },],
-    'options': [{ type: core_1.Input },],
-    'matchTemplate': [{ type: core_1.ContentChild, args: ['selectMatch',] },],
-    'choicesTemplate': [{ type: core_1.ContentChild, args: ['selectChoices',] },],
-    'choicesComponent': [{ type: core_1.ViewChild, args: [select_dict_choices_component_1.SelectDictChoicesComponent,] },],
-    'clickHandler': [{ type: core_1.HostListener, args: ['document:click', ['$event'],] },],
+    'selected': [{ type: Input },],
+    'url': [{ type: Input },],
+    'indexBy': [{ type: Input },],
+    'filterBy': [{ type: Input },],
+    'label': [{ type: Input },],
+    'placeholder': [{ type: Input },],
+    'options': [{ type: Input },],
+    'matchTemplate': [{ type: ContentChild, args: ['selectMatch',] },],
+    'choicesTemplate': [{ type: ContentChild, args: ['selectChoices',] },],
+    'choicesComponent': [{ type: ViewChild, args: [SelectDictChoicesComponent,] },],
+    'clickHandler': [{ type: HostListener, args: ['document:click', ['$event'],] },],
 };
-exports.SelectDictComponent = SelectDictComponent;
 //# sourceMappingURL=select-dict.component.js.map

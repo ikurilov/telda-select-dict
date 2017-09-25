@@ -1,7 +1,5 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-const core_1 = require("@angular/core");
-class SelectMatchDirective {
+import { Directive, ElementRef, Input } from '@angular/core';
+export class SelectMatchDirective {
     constructor(el) {
         this.el = el;
     }
@@ -12,16 +10,15 @@ class SelectMatchDirective {
     }
 }
 SelectMatchDirective.decorators = [
-    { type: core_1.Directive, args: [{
+    { type: Directive, args: [{
                 selector: '[appSelectMatch]'
             },] },
 ];
 /** @nocollapse */
 SelectMatchDirective.ctorParameters = () => [
-    { type: core_1.ElementRef, },
+    { type: ElementRef, },
 ];
 SelectMatchDirective.propDecorators = {
-    'focus': [{ type: core_1.Input },],
+    'focus': [{ type: Input },],
 };
-exports.SelectMatchDirective = SelectMatchDirective;
 //# sourceMappingURL=select-match.directive.js.map

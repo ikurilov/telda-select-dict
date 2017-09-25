@@ -1,7 +1,5 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-const core_1 = require("@angular/core");
-class HighlightChoiceDirective {
+import { Directive, ElementRef, Input, Renderer2 } from '@angular/core';
+export class HighlightChoiceDirective {
     constructor(el, renderer) {
         this.el = el;
         this.renderer = renderer;
@@ -18,17 +16,16 @@ class HighlightChoiceDirective {
     }
 }
 HighlightChoiceDirective.decorators = [
-    { type: core_1.Directive, args: [{
+    { type: Directive, args: [{
                 selector: '[appHighlightChoice]'
             },] },
 ];
 /** @nocollapse */
 HighlightChoiceDirective.ctorParameters = () => [
-    { type: core_1.ElementRef, },
-    { type: core_1.Renderer2, },
+    { type: ElementRef, },
+    { type: Renderer2, },
 ];
 HighlightChoiceDirective.propDecorators = {
-    'appHighlightChoice': [{ type: core_1.Input },],
+    'appHighlightChoice': [{ type: Input },],
 };
-exports.HighlightChoiceDirective = HighlightChoiceDirective;
 //# sourceMappingURL=highlight-choice.directive.js.map

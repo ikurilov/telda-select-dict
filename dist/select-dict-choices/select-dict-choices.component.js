@@ -1,12 +1,10 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-const core_1 = require("@angular/core");
-class SelectDictChoicesComponent {
+import { Component, ElementRef, EventEmitter, Input, Output } from '@angular/core';
+export class SelectDictChoicesComponent {
     constructor(ref) {
         this.ref = ref;
-        this.onSelect = new core_1.EventEmitter();
-        this.nextPage = new core_1.EventEmitter();
-        this.prevPage = new core_1.EventEmitter();
+        this.onSelect = new EventEmitter();
+        this.nextPage = new EventEmitter();
+        this.prevPage = new EventEmitter();
     }
     ngOnInit() {
         this.dropDownMenuElem = this.ref.nativeElement.querySelector('.dropdown-menu');
@@ -72,7 +70,7 @@ class SelectDictChoicesComponent {
     }
 }
 SelectDictChoicesComponent.decorators = [
-    { type: core_1.Component, args: [{
+    { type: Component, args: [{
                 selector: 'app-select-dict-choices',
                 templateUrl: './select-dict-choices.component.html',
                 styleUrls: ['./select-dict-choices.component.css']
@@ -80,20 +78,19 @@ SelectDictChoicesComponent.decorators = [
 ];
 /** @nocollapse */
 SelectDictChoicesComponent.ctorParameters = () => [
-    { type: core_1.ElementRef, },
+    { type: ElementRef, },
 ];
 SelectDictChoicesComponent.propDecorators = {
-    'template': [{ type: core_1.Input },],
-    'choices': [{ type: core_1.Input },],
-    'active': [{ type: core_1.Input },],
-    'activeIndex': [{ type: core_1.Input },],
-    'showNextPageButton': [{ type: core_1.Input },],
-    'showPreviousPageButton': [{ type: core_1.Input },],
-    'search': [{ type: core_1.Input },],
-    'indexBy': [{ type: core_1.Input },],
-    'onSelect': [{ type: core_1.Output },],
-    'nextPage': [{ type: core_1.Output },],
-    'prevPage': [{ type: core_1.Output },],
+    'template': [{ type: Input },],
+    'choices': [{ type: Input },],
+    'active': [{ type: Input },],
+    'activeIndex': [{ type: Input },],
+    'showNextPageButton': [{ type: Input },],
+    'showPreviousPageButton': [{ type: Input },],
+    'search': [{ type: Input },],
+    'indexBy': [{ type: Input },],
+    'onSelect': [{ type: Output },],
+    'nextPage': [{ type: Output },],
+    'prevPage': [{ type: Output },],
 };
-exports.SelectDictChoicesComponent = SelectDictChoicesComponent;
 //# sourceMappingURL=select-dict-choices.component.js.map

@@ -22,6 +22,7 @@
     "./src/app/select-dict/select-dict.module.ts"
   ],
   "angularCompilerOptions": {
-    "skipTemplateCodegen": true
+    "skipTemplateCodegen": true,
+    "strictMetadataEmit": true
   }
 }

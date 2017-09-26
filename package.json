@@ -37,6 +37,8 @@
     "@types/jasminewd2": "~2.0.2",
     "@types/node": "~6.0.60",
     "codelyzer": "~3.1.1",
+    "gulp": "^3.9.1",
+    "gulp-replace": "^0.6.1",
     "jasmine-core": "~2.6.2",
     "jasmine-spec-reporter": "~4.1.0",
     "karma": "~1.7.0",
@@ -46,9 +48,10 @@
     "karma-jasmine": "~1.1.0",
     "karma-jasmine-html-reporter": "^0.2.2",
     "protractor": "~5.1.2",
+    "require-dir": "^0.3.2",
     "ts-node": "~3.2.0",
     "tslint": "~5.3.2",
     "typescript": "~2.3.3"
   },
-  "main": "dist/select-dict.module.js"
+  "module": "dist-ngc/select-dict.module.js"
 }

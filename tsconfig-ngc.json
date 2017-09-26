@@ -1,15 +1,17 @@
 {
   "compilerOptions": {
-    "target": "es2015",
+    "declaration": true,
     "module": "es2015",
+    "target": "es2015",
+
     "moduleResolution": "node",
     "sourceMap": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "removeComments": false,
     "noImplicitAny": false,
-    "declaration": true,
-    "outDir": "./dist",
+
+    "outDir": "./dist-ngc",
     "lib": ["es2015", "dom"]
   },
   "exclude": [
@@ -19,7 +21,7 @@
     "./src/app/select-dict/select-dict.module.ts"
   ],
   "angularCompilerOptions": {
-    "skipTemplateCodegen": true,
-    "strictMetadataEmit": true
+    "strictMetadataEmit": true,
+    "skipTemplateCodegen": false
   }
 }

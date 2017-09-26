@@ -9,7 +9,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "ngc-compile": "ngc -p ./tsconfig-ngc.json"
+    "build-module": "gulp clean:before-build && gulp inline-templates-and-css && ngc -p ./tsconfig-ngc.json && gulp clean:after-build"
   },
   "private": true,
   "dependencies": {
@@ -38,6 +38,7 @@
     "@types/node": "~6.0.60",
     "codelyzer": "~3.1.1",
     "gulp": "^3.9.1",
+    "gulp-clean": "^0.3.2",
     "gulp-replace": "^0.6.1",
     "jasmine-core": "~2.6.2",
     "jasmine-spec-reporter": "~4.1.0",

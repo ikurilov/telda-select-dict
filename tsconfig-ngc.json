@@ -22,7 +22,7 @@
     "node_modules"
   ],
   "files": [
-    "./dist-ts/index.ts"
+    "./dist-ts/select-dict.module.ts"
   ],
   "angularCompilerOptions": {
     "strictMetadataEmit": true,

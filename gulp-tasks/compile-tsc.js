@@ -8,7 +8,7 @@ const pathToModule = 'src/app/select-dict';
 const tsProject = typescript.createProject('tsconfig-ngc.json');
 
 gulp.task('compile', function () {
-  const tsResult = gulp.src(pathToModule + '/**/*.ts')
+  const tsResult = gulp.src(pathToModule + '/**/*.component.ts')
     .pipe(replace(/templateUrl:\s*'([^']+?\.html)'/g, function (match, templateUrl) {
       const templateContent = loadResourceFile(joinPath(this.file.path, templateUrl));
       return `template: "${templateContent}"`;

@@ -60,6 +60,6 @@
     "tslint": "~5.3.2",
     "typescript": "~2.3.3"
   },
-  "module": "./release/index.js",
-  "main": "./release/index.js"
+  "module": "./release/select-dict.module.js",
+  "main": "./release/select-dict.module.js"
 }

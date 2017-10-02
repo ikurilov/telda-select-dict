@@ -10,6 +10,8 @@ var select_match_directive_1 = require("./select-match.directive");
 var select_dict_choices_component_1 = require("./select-dict-choices/select-dict-choices.component");
 var select_search_directive_1 = require("./select-search.directive");
 var select_dict_component_1 = require("./select-dict.component");
+var select_dict_component_2 = require("./select-dict.component");
+exports.SelectDictComponent = select_dict_component_2.SelectDictComponent;
 var SelectDictModule = (function () {
     function SelectDictModule() {
     }

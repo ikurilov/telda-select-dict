@@ -9,6 +9,7 @@ import {SelectDictChoicesComponent} from './select-dict-choices/select-dict-choi
 import {SelectSearchDirective} from './select-search.directive';
 import {SelectDictComponent} from './select-dict.component';
 
+export {SelectDictComponent} from './select-dict.component';
 
 @NgModule({
   imports: [

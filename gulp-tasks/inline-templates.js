@@ -4,7 +4,7 @@ const path = require('path');
 const replace = require('gulp-replace');
 
 // params
-const pathToModule = 'src/app/select-dict';
+const pathToModule = 'src/lib';
 const tempFolderForTs = 'dist-ts';
 // end params
 

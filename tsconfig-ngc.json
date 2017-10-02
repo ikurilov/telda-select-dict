@@ -9,7 +9,7 @@
     "experimentalDecorators": true,
     "removeComments": false,
     "noImplicitAny": false,
-    "outDir": "./module-dist",
+    "outDir": "./release",
     "typeRoots": [
       "./node_modules/@types"
     ],
@@ -22,7 +22,7 @@
     "node_modules"
   ],
   "files": [
-    "./dist-ts/select-dict.module.ts"
+    "./dist-ts/index.ts"
   ],
   "angularCompilerOptions": {
     "strictMetadataEmit": true,

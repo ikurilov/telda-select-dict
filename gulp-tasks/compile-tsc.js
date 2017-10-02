@@ -22,7 +22,7 @@ gulp.task('compile', function () {
     }))
     .pipe(tsProject());
 
-  return tsResult.pipe(gulp.dest('module-dist/'));
+  return tsResult.pipe(gulp.dest('release/'));
 });
 
 

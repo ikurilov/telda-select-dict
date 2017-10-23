@@ -73,7 +73,8 @@ export class SelectDictComponent implements OnInit, ControlValueAccessor {
 
   @HostListener('document:click', ['$event'])
   clickHandler(event) {
-    if (!this.eRef.nativeElement.contains(event.target) && this.opened) {
+    let selectDictContainer = this.eRef.nativeElement.querySelector('.select-dict');
+    if (!selectDictContainer.contains(event.target) && this.opened) {
       this.onClose();
     }
   }

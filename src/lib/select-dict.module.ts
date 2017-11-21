@@ -8,6 +8,7 @@ import {SelectMatchDirective} from './select-match.directive';
 import {SelectDictChoicesComponent} from './select-dict-choices/select-dict-choices.component';
 import {SelectSearchDirective} from './select-search.directive';
 import {SelectDictComponent} from './select-dict.component';
+import {SelectDictService} from './select-dict.service';
 
 export {SelectDictComponent} from './select-dict.component';
 
@@ -25,6 +26,9 @@ export {SelectDictComponent} from './select-dict.component';
     SelectMatchDirective,
     SelectDictPipe,
     HighlightChoiceDirective
+  ],
+  providers: [
+    SelectDictService
   ],
   exports: [
     SelectDictComponent

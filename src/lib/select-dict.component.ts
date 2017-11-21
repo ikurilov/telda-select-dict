@@ -14,8 +14,9 @@ import {SelectDictChoicesComponent} from './select-dict-choices/select-dict-choi
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {SelectDictPipe} from './select-dict.pipe';
 import {Subscription} from 'rxjs/Subscription';
+import {SelectDictService} from './select-dict.service';
 
-interface IDictListContainer {
+export interface IDictListContainer {
   total: number;
   size: number;
   list: any[]
@@ -79,7 +80,7 @@ export class SelectDictComponent implements OnInit, ControlValueAccessor {
     }
   }
 
-  constructor(private eRef: ElementRef, private http: Http) {
+  constructor(private eRef: ElementRef, private http: Http, private dictService: SelectDictService) {
   }
 
   ngOnInit() {
@@ -166,8 +167,7 @@ export class SelectDictComponent implements OnInit, ControlValueAccessor {
 
     assign(params, this.options);
 
-    return this.http.get(this.url, {withCredentials: true, params})
-      .map(result => result.json())
+    return this.dictService.getPage(this.url, params)
       .subscribe((container: IDictListContainer) => {
         if (this.initialQuery) {
           this.initialQuery = false;
@@ -184,8 +184,6 @@ export class SelectDictComponent implements OnInit, ControlValueAccessor {
         this.choicesComponent.scrollToTop();
         this.choicesComponent._ensureHighlightVisible();
       });
-
-
   }
 
   getNextPage() {

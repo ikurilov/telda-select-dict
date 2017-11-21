@@ -3,6 +3,8 @@ import {NgModule} from '@angular/core';
 import {AppComponent} from './app.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {SelectDictModule} from '../lib/select-dict.module';
+import {SelectDictService} from '../lib/select-dict.service';
+import {CustomDictService} from './custom-dict.service';
 
 @NgModule({
   declarations: [
@@ -13,7 +15,9 @@ import {SelectDictModule} from '../lib/select-dict.module';
     FormsModule, ReactiveFormsModule,
     SelectDictModule
   ],
-  providers: [],
+  providers: [
+    {provide: SelectDictService, useClass: CustomDictService}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {

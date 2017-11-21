@@ -11,10 +11,12 @@ require("rxjs/add/operator/toPromise");
 var select_dict_choices_component_1 = require("./select-dict-choices/select-dict-choices.component");
 var forms_1 = require("@angular/forms");
 var select_dict_pipe_1 = require("./select-dict.pipe");
+var select_dict_service_1 = require("./select-dict.service");
 var SelectDictComponent = (function () {
-    function SelectDictComponent(eRef, http) {
+    function SelectDictComponent(eRef, http, dictService) {
         this.eRef = eRef;
         this.http = http;
+        this.dictService = dictService;
         this.indexBy = 'id';
         this.filterBy = 'name';
         this.dictFilter = new select_dict_pipe_1.SelectDictPipe();
@@ -110,8 +112,7 @@ var SelectDictComponent = (function () {
             _a.from = this.page * this.listSize,
             _a);
         object_1.assign(params, this.options);
-        return this.http.get(this.url, { withCredentials: true, params: params })
-            .map(function (result) { return result.json(); })
+        return this.dictService.getPage(this.url, params)
             .subscribe(function (container) {
             if (_this.initialQuery) {
                 _this.initialQuery = false;
@@ -217,6 +218,7 @@ SelectDictComponent.decorators = [
 SelectDictComponent.ctorParameters = function () { return [
     { type: core_1.ElementRef, },
     { type: http_1.Http, },
+    { type: select_dict_service_1.SelectDictService, },
 ]; };
 SelectDictComponent.propDecorators = {
     'selected': [{ type: core_1.Input },],

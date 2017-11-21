@@ -7,9 +7,16 @@ import { SelectDictChoicesComponent } from './select-dict-choices/select-dict-ch
 import { ControlValueAccessor } from '@angular/forms';
 import { SelectDictPipe } from './select-dict.pipe';
 import { Subscription } from 'rxjs/Subscription';
+import { SelectDictService } from './select-dict.service';
+export interface IDictListContainer {
+    total: number;
+    size: number;
+    list: any[];
+}
 export declare class SelectDictComponent implements OnInit, ControlValueAccessor {
     private eRef;
     private http;
+    private dictService;
     selected: any;
     url: any;
     indexBy: string;
@@ -37,7 +44,7 @@ export declare class SelectDictComponent implements OnInit, ControlValueAccessor
     choicesTemplate: any;
     choicesComponent: SelectDictChoicesComponent;
     clickHandler(event: any): void;
-    constructor(eRef: ElementRef, http: Http);
+    constructor(eRef: ElementRef, http: Http, dictService: SelectDictService);
     ngOnInit(): void;
     onSelect($event: any): void;
     onOpen($event?: any): void;

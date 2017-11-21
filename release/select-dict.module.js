@@ -10,6 +10,7 @@ var select_match_directive_1 = require("./select-match.directive");
 var select_dict_choices_component_1 = require("./select-dict-choices/select-dict-choices.component");
 var select_search_directive_1 = require("./select-search.directive");
 var select_dict_component_1 = require("./select-dict.component");
+var select_dict_service_1 = require("./select-dict.service");
 var select_dict_component_2 = require("./select-dict.component");
 exports.SelectDictComponent = select_dict_component_2.SelectDictComponent;
 var SelectDictModule = (function () {
@@ -32,6 +33,9 @@ SelectDictModule.decorators = [
                     select_match_directive_1.SelectMatchDirective,
                     select_dict_pipe_1.SelectDictPipe,
                     highlight_choice_directive_1.HighlightChoiceDirective
+                ],
+                providers: [
+                    select_dict_service_1.SelectDictService
                 ],
                 exports: [
                     select_dict_component_1.SelectDictComponent

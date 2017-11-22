@@ -29,12 +29,20 @@
 
     </app-select-dict>
 
-    <div class="form-group">
-      <label for="exampleInputEmail1">Email address</label>
-      <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
-             placeholder="Enter email">
-      <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-    </div>
+    <app-select-dict
+      url="settlement"
+      [(ngModel)]="selectedItem"
+      [options]="{order: 'name'}"
+      placeholder="With out label"
+    >
+      <ng-template let-selected #selectMatch>
+        <span [title]="selected?.nameM">{{selected?.nameM}}</span>
+      </ng-template>
+      <ng-template let-item #selectChoices>
+        <span [title]="item?.nameM">{{item.nameM}}</span>
+      </ng-template>
+
+    </app-select-dict>
 
     {{selectedItem| json}}
   </div>

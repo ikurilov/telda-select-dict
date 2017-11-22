@@ -24,6 +24,7 @@ export declare class SelectDictComponent implements OnInit, ControlValueAccessor
     label: string;
     placeholder: string;
     options: any;
+    size: 'sm' | null;
     dictFilter: SelectDictPipe;
     focusMatch: Subject<{}>;
     focusSearch: Subject<{}>;

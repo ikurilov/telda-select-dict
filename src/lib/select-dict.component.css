@@ -6,8 +6,9 @@
 
 .select-dict .dropdown-toggle:after {
   position: absolute;
-  top: 17px;
+  top: 50%;
   right: 15px;
+  transform: translateY(-50%);
 }
 
 .select-dict .hide-overflowed-text {

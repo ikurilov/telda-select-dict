@@ -42,6 +42,7 @@
 </div>
 <div *ngIf="label === undefined || label === null" class="select-dict dropdown">
   <div class="form-control dropdown-toggle hide-overflowed-text"
+       [ngClass]="size === 'sm' ? 'form-control-sm' : ''"
        tabindex="0"
        appSelectMatch
        [focus]="focusMatch"
@@ -58,6 +59,7 @@
     *ngIf="opened"
     #searchInput
     class="form-control search-input"
+    [ngClass]="size === 'sm' ? 'form-control-sm' : ''"
     appSelectSearch
     [focus]="focusSearch"
     (keyup)="onSearch(searchInput.value)"
@@ -65,6 +67,7 @@
     (keydown.arrowup)="activatePrev()"
     (keydown.arrowdown)="activateNext()">
   <app-select-dict-choices
+    [ngClass]="size === 'sm' ? 'sm' : ''"
     *ngIf="opened"
     [choices]="items"
     [indexBy]="indexBy"

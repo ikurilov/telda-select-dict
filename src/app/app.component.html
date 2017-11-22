@@ -43,6 +43,23 @@
       </ng-template>
 
     </app-select-dict>
+    <br>
+    <p>Small size (size="sm")</p>
+    <app-select-dict
+      url="settlement"
+      size="sm"
+      [(ngModel)]="selectedItem"
+      [options]="{order: 'name'}"
+      placeholder="With out label"
+    >
+      <ng-template let-selected #selectMatch>
+        <span [title]="selected?.nameM">{{selected?.nameM}}</span>
+      </ng-template>
+      <ng-template let-item #selectChoices>
+        <span [title]="item?.nameM">{{item.nameM}}</span>
+      </ng-template>
+
+    </app-select-dict>
 
     {{selectedItem| json}}
   </div>

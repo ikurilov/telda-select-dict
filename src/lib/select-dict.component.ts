@@ -42,6 +42,7 @@ export class SelectDictComponent implements OnInit, ControlValueAccessor {
   @Input() label: string;
   @Input() placeholder: string;
   @Input() options;
+  @Input() size: 'sm' | null;
 
   dictFilter = new SelectDictPipe();
 

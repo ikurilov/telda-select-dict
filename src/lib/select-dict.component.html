@@ -53,7 +53,7 @@
                  [ngTemplateOutlet]="matchTemplate"
                  [ngOutletContext]="{$implicit: selected}">
     </ng-template>
-    <span *ngIf="!selected">{{placeholder || label}}</span>
+    <div class="placeholder" *ngIf="!selected">{{placeholder || label}}</div>
   </div>
   <input
     *ngIf="opened"

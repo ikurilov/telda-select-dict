@@ -2,6 +2,7 @@
   <label>{{label}}</label>
   <div class="select-dict dropdown">
     <div class="form-control dropdown-toggle hide-overflowed-text"
+         [ngClass]="size === 'sm' ? 'form-control-sm' : ''"
          tabindex="0"
          appSelectMatch
          [focus]="focusMatch"
@@ -18,6 +19,7 @@
       *ngIf="opened"
       #searchInput
       class="form-control search-input"
+      [ngClass]="size === 'sm' ? 'form-control-sm' : ''"
       appSelectSearch
       [focus]="focusSearch"
       (keyup)="onSearch(searchInput.value)"

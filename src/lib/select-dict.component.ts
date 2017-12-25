@@ -1,5 +1,5 @@
 import {
-  Component, ContentChild, ElementRef, forwardRef, HostListener, Input, OnInit, ViewChild
+  Component, ContentChild, ElementRef, EventEmitter, forwardRef, HostListener, Input, OnInit, Output, ViewChild
 } from '@angular/core';
 import {findIndex} from 'lodash/array';
 import {find} from 'lodash/collection';

@@ -14,7 +14,7 @@
      (click)="selectItem($event, item)">
     <ng-template
       [ngTemplateOutlet]="template"
-      [ngOutletContext]="{$implicit: item}">
+      [ngTemplateOutletContext]="{$implicit: item}">
     </ng-template>
   </a>
   <a class="dropdown-item next-page"

@@ -1,13 +1,12 @@
 import {Injectable} from '@angular/core';
-import {assign} from 'lodash/object'
 import {SelectDictService} from '../lib/select-dict.service';
-import {Http} from '@angular/http';
+import {HttpClient} from '@angular/common/http';
 
 @Injectable()
 export class CustomDictService extends SelectDictService {
   url = 'http://172.16.6.184:8080/bti/rest/dict/';
 
-  constructor(http: Http) {
+  constructor(http: HttpClient) {
     super(http);
   }
 

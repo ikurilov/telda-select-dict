@@ -1,8 +1,7 @@
 import {Injectable} from '@angular/core';
-import {assign} from 'lodash/object'
-import {Http} from '@angular/http';
 import {Observable} from 'rxjs/Observable';
 import {IDictListContainer} from './select-dict.component';
+import {HttpClient} from '@angular/common/http';
 
 export interface ISelectDictService {
   getPage(dictionary_name: string, params?: any): Observable<IDictListContainer>
@@ -11,7 +10,7 @@ export interface ISelectDictService {
 @Injectable()
 export class SelectDictService implements ISelectDictService {
 
-  constructor(private http: Http) {
+  constructor(private http: HttpClient) {
   }
 
   getPage(dictionary_name: string, params?: any) {
@@ -19,6 +18,6 @@ export class SelectDictService implements ISelectDictService {
       withCredentials: true,
       params
     };
-    return this.http.get(dictionary_name, options).map(result => result.json())
+    return <Observable<IDictListContainer>>this.http.get(dictionary_name, options)
   }
 }

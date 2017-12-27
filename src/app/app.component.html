@@ -46,29 +46,40 @@
       size="sm"
       [(ngModel)]="selectedItem"
       [options]="{order: 'name'}"
-      placeholder="With out label"
-    >
+      placeholder="With out label">
       <ng-template let-selected #selectMatch>
         <span [title]="selected?.nameM">{{selected?.nameM}}</span>
       </ng-template>
       <ng-template let-item #selectChoices>
         <span [title]="item?.nameM">{{item.nameM}}</span>
       </ng-template>
-
     </app-select-dict>
     <p>Without placeholder</p>
     <app-select-dict
       url="settlement"
+      [size]="'sm'"
       [(ngModel)]="selectedItem"
-      [options]="{order: 'name'}"
-    >
+      [options]="{order: 'name'}">
       <ng-template let-selected #selectMatch>
         <span [title]="selected?.nameM">{{selected?.nameM}}</span>
       </ng-template>
       <ng-template let-item #selectChoices>
         <span [title]="item?.nameM">{{item.nameM}}</span>
       </ng-template>
-
+    </app-select-dict>
+    <p>Alert() on select:</p>
+    <app-select-dict
+      url="settlement"
+      [size]="'sm'"
+      [(ngModel)]="selectedItem"
+      (ngModelChange)="onSelect()"
+      [options]="{order: 'name'}">
+      <ng-template let-selected #selectMatch>
+        <span [title]="selected?.nameM">{{selected?.nameM}}</span>
+      </ng-template>
+      <ng-template let-item #selectChoices>
+        <span [title]="item?.nameM">{{item.nameM}}</span>
+      </ng-template>
     </app-select-dict>
     <br>
 

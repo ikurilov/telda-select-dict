@@ -1,13 +1,9 @@
-import {
-  Component, ContentChild, ElementRef, EventEmitter, forwardRef, HostListener, Input, OnInit, Output, ViewChild
-} from '@angular/core';
+import {Component, ContentChild, ElementRef, forwardRef, HostListener, Input, OnInit, ViewChild} from '@angular/core';
 import {findIndex} from 'lodash/array';
-import {find} from 'lodash/collection';
 import {cloneDeep} from 'lodash/lang';
 import {assign} from 'lodash/object'
 
 import {Subject} from 'rxjs/Subject';
-import {Http} from '@angular/http';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise'
 import {SelectDictChoicesComponent} from './select-dict-choices/select-dict-choices.component';
@@ -81,7 +77,7 @@ export class SelectDictComponent implements OnInit, ControlValueAccessor {
     }
   }
 
-  constructor(private eRef: ElementRef, private http: Http, private dictService: SelectDictService) {
+  constructor(private eRef: ElementRef, private dictService: SelectDictService) {
   }
 
   ngOnInit() {
@@ -114,6 +110,7 @@ export class SelectDictComponent implements OnInit, ControlValueAccessor {
     this.focusMatch.next();
   }
 
+  /*TODO create this functionality*/
   onClear() {
 
   }
@@ -161,7 +158,7 @@ export class SelectDictComponent implements OnInit, ControlValueAccessor {
 
   request(): Subscription {
     let params = {
-      [this.filterBy]: this.search,
+      [this.filterBy]: this.search ? this.search : '',
       count: this.listSize,
       from: this.page * this.listSize
     };

@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {SelectDictService} from '../lib/select-dict.service';
+import {SelectDictService} from '../../release/select-dict.service';
 import {HttpClient} from '@angular/common/http';
 
 @Injectable()

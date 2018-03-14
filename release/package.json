@@ -1,0 +1,19 @@
+{
+  "$schema": "../../node_modules/ng-packagr/package.schema.json",
+  "name": "select-dict",
+  "version": "1.0.8",
+  "license": "MIT",
+  "private": true,
+  "peerDependencies": {
+    "@angular/core": "^5.0.0",
+    "@angular/compiler": "^5.0.0"
+  },
+  "main": "bundles/select-dict.umd.js",
+  "module": "esm5/select-dict.js",
+  "es2015": "esm2015/select-dict.js",
+  "typings": "select-dict.d.ts",
+  "metadata": "select-dict.metadata.json",
+  "dependencies": {
+    "tslib": "^1.7.1"
+  }
+}

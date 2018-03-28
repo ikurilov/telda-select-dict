@@ -3,7 +3,7 @@ import {NgModule} from '@angular/core';
 import {AppComponent} from './app.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {CustomDictService} from './custom-dict.service';
-import {SelectDictModule, SelectDictService} from '../../release';
+import {SelectDictModule, SelectDictService} from 'lib';
 
 @NgModule({
   declarations: [
@@ -11,7 +11,8 @@ import {SelectDictModule, SelectDictService} from '../../release';
   ],
   imports: [
     BrowserModule,
-    FormsModule, ReactiveFormsModule,
+    FormsModule,
+    ReactiveFormsModule,
     SelectDictModule
   ],
   providers: [

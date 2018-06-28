@@ -4,6 +4,17 @@
   overflow-x: hidden;
 }
 
+.select-dict div.form-control.disabled {
+  cursor: auto;
+  background-color: #e9ecef;
+  opacity: 1;
+}
+
+.select-dict div.form-control.disabled:focus {
+  box-shadow: none;
+  border-color: #ced4da;
+}
+
 .select-dict .dropdown-toggle:after {
   position: absolute;
   top: 50%;
@@ -20,3 +31,4 @@
 .placeholder {
   height: 1.3rem;
 }
+

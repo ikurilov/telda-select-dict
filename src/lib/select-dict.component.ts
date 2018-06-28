@@ -39,6 +39,7 @@ export class SelectDictComponent implements OnInit, ControlValueAccessor {
   @Input() placeholder: string;
   @Input() options;
   @Input() size: 'sm' | null;
+  @Input() disabled = false;
 
   dictFilter = new SelectDictPipe();
 
@@ -91,9 +92,11 @@ export class SelectDictComponent implements OnInit, ControlValueAccessor {
   }
 
   onOpen($event?) {
-    this.opened = true;
-    this.active = this.selected;
-    this.request();
+    if (!this.disabled) {
+      this.opened = true;
+      this.active = this.selected;
+      this.request();
+    }
   }
 
   onClose() {

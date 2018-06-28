@@ -2,8 +2,8 @@
   <label>{{label}}</label>
   <div class="select-dict dropdown">
     <div class="form-control dropdown-toggle hide-overflowed-text"
-         [ngClass]="size === 'sm' ? 'form-control-sm' : ''"
-         tabindex="0"
+         [ngClass]="{'form-control-sm': size === 'sm', 'disabled': disabled}"
+         [tabindex]="disabled ? -1 : 0"
          appSelectMatch
          [focus]="focusMatch"
          [hidden]="opened"
@@ -44,8 +44,8 @@
 </div>
 <div *ngIf="label === undefined || label === null" class="select-dict dropdown">
   <div class="form-control dropdown-toggle hide-overflowed-text"
-       [ngClass]="size === 'sm' ? 'form-control-sm' : ''"
-       tabindex="0"
+       [ngClass]="{'form-control-sm': size === 'sm', 'disabled': disabled}"
+       [tabindex]="disabled ? -1 : 0"
        appSelectMatch
        [focus]="focusMatch"
        [hidden]="opened"

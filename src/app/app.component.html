@@ -1,36 +1,25 @@
 <!--The content below is only a placeholder and can be replaced.-->
 <div class="container">
   <div class="col">
-
-    <div class="form-group">
-      <label for="exampleInputEmail1">Email address</label>
-      <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
-             placeholder="Enter email">
-      <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-    </div>
-
     <app-select-dict
       url="settlement"
       [(ngModel)]="selectedItem"
       [options]="{order: 'name'}"
       label="Город"
-      placeholder="Город не выбран"
-    >
+      placeholder="Город не выбран">
       <ng-template let-selected #selectMatch>
         <span [title]="selected?.nameM">{{selected?.nameM}}</span>
       </ng-template>
       <ng-template let-item #selectChoices>
         <span [title]="item?.nameM">{{item.nameM}}</span>
       </ng-template>
-
     </app-select-dict>
 
     <app-select-dict
       url="settlement"
       [(ngModel)]="selectedItem"
       [options]="{order: 'name'}"
-      placeholder="With out label"
-    >
+      placeholder="With out label">
       <ng-template let-selected #selectMatch>
         <span [title]="selected?.nameM">{{selected?.nameM}}</span>
       </ng-template>
@@ -82,6 +71,38 @@
       </ng-template>
     </app-select-dict>
     <br>
+    <p>Disabled state:</p>
+    <div class="form-group">
+      <label for="asd">Label</label>
+      <input id="asd" type="text" class="form-control" value="Test test test" disabled>
+    </div>
+    <app-select-dict
+      url="settlement"
+      [size]="'sm'"
+      [(ngModel)]="selectedItem"
+      [options]="{order: 'name'}"
+      [disabled]="true"
+      label="Label">
+      <ng-template let-selected #selectMatch>
+        <span [title]="selected?.nameM">{{selected?.nameM}}</span>
+      </ng-template>
+      <ng-template let-item #selectChoices>
+        <span [title]="item?.nameM">{{item.nameM}}</span>
+      </ng-template>
+    </app-select-dict>
+    <br>
+    <app-select-dict
+      url="settlement"
+      [(ngModel)]="selectedItem"
+      [options]="{order: 'name'}"
+      [disabled]="true">
+      <ng-template let-selected #selectMatch>
+        <span [title]="selected?.nameM">{{selected?.nameM}}</span>
+      </ng-template>
+      <ng-template let-item #selectChoices>
+        <span [title]="item?.nameM">{{item.nameM}}</span>
+      </ng-template>
+    </app-select-dict>
 
     {{selectedItem| json}}
   </div>

@@ -29,6 +29,9 @@
 }
 
 .placeholder {
-  height: 1.3rem;
+  height: 1.5rem;
 }
 
+.form-control-sm .placeholder {
+  height: 1.313rem;
+}

@@ -73,7 +73,7 @@
     <br>
     <p>Disabled state:</p>
     <div class="form-group">
-      <label for="asd">Label</label>
+      <label for="asd">Bootstrap form-control text input</label>
       <input id="asd" type="text" class="form-control" value="Test test test" disabled>
     </div>
     <app-select-dict
@@ -82,7 +82,7 @@
       [(ngModel)]="selectedItem"
       [options]="{order: 'name'}"
       [disabled]="true"
-      label="Label">
+      label="Small select-dict with label">
       <ng-template let-selected #selectMatch>
         <span [title]="selected?.nameM">{{selected?.nameM}}</span>
       </ng-template>
@@ -90,10 +90,10 @@
         <span [title]="item?.nameM">{{item.nameM}}</span>
       </ng-template>
     </app-select-dict>
-    <br>
     <app-select-dict
       url="settlement"
       [(ngModel)]="selectedItem"
+      label="Normal select-dict with label"
       [options]="{order: 'name'}"
       [disabled]="true">
       <ng-template let-selected #selectMatch>
@@ -104,6 +104,6 @@
       </ng-template>
     </app-select-dict>
 
-    {{selectedItem| json}}
+   <!-- {{selectedItem| json}}-->
   </div>
 </div>

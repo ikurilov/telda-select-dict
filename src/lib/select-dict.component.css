@@ -1,4 +1,16 @@
+:host {
+  flex: 1 1 auto;
+  width: 0;
+  margin-bottom: 0;
+}
+
+.select-dict {
+  position: relative;
+}
+
 .select-dict div.form-control {
+  width: 100%;
+  height: 100%;
   cursor: pointer;
   padding-right: 38px;
   overflow-x: hidden;
@@ -22,10 +34,22 @@
   transform: translateY(-50%);
 }
 
-.select-dict .hide-overflowed-text {
+.select-dict .dropdown-toggle {
+  position: absolute;
+  display: block;
   overflow-x: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  z-index: 1;
+}
+
+.select-dict .search-input {
+  position: relative;
+  z-index: 0;
+  top: 0;
+  display: block;
+  width: 100%;
+  border-radius: 0.25rem;
 }
 
 .placeholder {

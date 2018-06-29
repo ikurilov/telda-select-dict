@@ -1,4 +1,14 @@
-import {Component, ContentChild, ElementRef, forwardRef, HostListener, Input, OnInit, ViewChild} from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ContentChild,
+  ElementRef,
+  forwardRef,
+  HostListener,
+  Input,
+  OnInit,
+  ViewChild
+} from '@angular/core';
 import {findIndex} from 'lodash/array';
 import {cloneDeep} from 'lodash/lang';
 import {assign} from 'lodash/object'
@@ -30,7 +40,7 @@ export interface IDictListContainer {
     }
   ]
 })
-export class SelectDictComponent implements OnInit, ControlValueAccessor {
+export class SelectDictComponent implements OnInit, AfterViewInit, ControlValueAccessor {
   @Input() selected;
   @Input() url;
   @Input() indexBy = 'id';
@@ -62,6 +72,8 @@ export class SelectDictComponent implements OnInit, ControlValueAccessor {
 
   opened = false;
 
+  selectDictContainerElement;
+
   propagateChange = (_: any) => {
   };
 
@@ -71,10 +83,11 @@ export class SelectDictComponent implements OnInit, ControlValueAccessor {
   @ViewChild(SelectDictChoicesComponent) choicesComponent: SelectDictChoicesComponent;
 
   @HostListener('document:click', ['$event'])
-  clickHandler(event) {
-    let selectDictContainer = this.eRef.nativeElement.querySelector('.select-dict');
-    if (!selectDictContainer.contains(event.target) && this.opened) {
-      this.onClose();
+  outsideClickHandler(event) {
+    if (this.opened) {
+      if (!this.selectDictContainerElement.contains(event.target) && this.opened) {
+        this.closeChoices();
+      }
     }
   }
 
@@ -82,26 +95,32 @@ export class SelectDictComponent implements OnInit, ControlValueAccessor {
   }
 
   ngOnInit() {
+  }
 
+  ngAfterViewInit() {
+    this.selectDictContainerElement = this.eRef.nativeElement.querySelector('.select-dict');
   }
 
   onSelect($event) {
     this.selected = $event.item;
     this.propagateChange(this.selected);
-    this.onClose();
+    this.closeChoices();
   }
 
   onOpen($event?) {
     if (!this.disabled) {
       this.opened = true;
       this.active = this.selected;
+      this.focusSearch.next();
       this.request();
     }
   }
 
-  onClose() {
+  closeChoices() {
+
     this.opened = false;
     this.resetComponent();
+    this.focusMatch.next();
   }
 
   resetComponent() {
@@ -110,7 +129,6 @@ export class SelectDictComponent implements OnInit, ControlValueAccessor {
     this.activeIndex = -1;
     this.page = 0;
     this.search = '';
-    this.focusMatch.next();
   }
 
   /*TODO create this functionality*/

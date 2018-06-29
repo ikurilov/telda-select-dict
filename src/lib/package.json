@@ -1,7 +1,7 @@
 {
   "$schema": "../../node_modules/ng-packagr/package.schema.json",
   "name": "telda-select-dict",
-  "version": "1.0.12",
+  "version": "1.0.13",
   "license": "MIT",
   "private": false,
   "peerDependencies": {

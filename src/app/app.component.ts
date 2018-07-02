@@ -12,4 +12,15 @@ export class AppComponent {
   onSelect() {
     alert('Hey!');
   }
+
+  changeSelectedItem() {
+    this.selectedItem = {
+      id: 0,
+      nameM: 'CHANGED!!'
+    }
+  }
+
+  changed(item) {
+    console.log(item);
+  }
 }

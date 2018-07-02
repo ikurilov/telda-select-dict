@@ -1,12 +1,16 @@
 import {
   AfterViewInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   ContentChild,
   ElementRef,
+  EventEmitter,
   forwardRef,
   HostListener,
   Input,
   OnInit,
+  Output,
   ViewChild
 } from '@angular/core';
 import {findIndex} from 'lodash/array';
@@ -38,7 +42,8 @@ export interface IDictListContainer {
       useExisting: forwardRef(() => SelectDictComponent),
       multi: true
     }
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SelectDictComponent implements OnInit, AfterViewInit, ControlValueAccessor {
   @Input() selected;
@@ -50,6 +55,8 @@ export class SelectDictComponent implements OnInit, AfterViewInit, ControlValueA
   @Input() options;
   @Input() size: 'sm' | null;
   @Input() disabled = false;
+
+  @Output() update = new EventEmitter();
 
   dictFilter = new SelectDictPipe();
 
@@ -91,7 +98,7 @@ export class SelectDictComponent implements OnInit, AfterViewInit, ControlValueA
     }
   }
 
-  constructor(private eRef: ElementRef, private dictService: SelectDictService) {
+  constructor(private eRef: ElementRef, private dictService: SelectDictService, private cdr: ChangeDetectorRef) {
   }
 
   ngOnInit() {
@@ -103,7 +110,8 @@ export class SelectDictComponent implements OnInit, AfterViewInit, ControlValueA
 
   onSelect($event) {
     this.selected = $event.item;
-    this.propagateChange(this.selected);
+    this.propagateChange($event.item);
+    this.update.emit($event.item);
     this.closeChoices();
   }
 
@@ -117,7 +125,6 @@ export class SelectDictComponent implements OnInit, AfterViewInit, ControlValueA
   }
 
   closeChoices() {
-
     this.opened = false;
     this.resetComponent();
     this.focusMatch.next();
@@ -202,6 +209,8 @@ export class SelectDictComponent implements OnInit, AfterViewInit, ControlValueA
 
         this.choicesComponent.scrollToTop();
         this.choicesComponent._ensureHighlightVisible();
+
+        this.cdr.markForCheck();
       });
   }
 
@@ -268,6 +277,7 @@ export class SelectDictComponent implements OnInit, AfterViewInit, ControlValueA
 
   writeValue(value: any) {
     this.selected = value;
+    this.cdr.markForCheck();
   }
 
   registerOnChange(fn) {

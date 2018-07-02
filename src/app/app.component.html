@@ -1,9 +1,12 @@
 <!--The content below is only a placeholder and can be replaced.-->
 <div class="container">
-  <div class="col">
+<div class="row">
+  <div class="col-6">
+    <button class="btn btn-primary" (click)="changeSelectedItem()">Change model!</button>
     <app-select-dict
       url="settlement"
       [(ngModel)]="selectedItem"
+      (ngModelChange)="changed($event)"
       [options]="{order: 'name'}"
       label="Город"
       placeholder="Город не выбран">
@@ -103,7 +106,9 @@
         <span [title]="item?.nameM">{{item.nameM}}</span>
       </ng-template>
     </app-select-dict>
-
-   <!-- {{selectedItem| json}}-->
   </div>
+  <div class="col-6">
+    {{selectedItem| json}}
+  </div>
+</div>
 </div>

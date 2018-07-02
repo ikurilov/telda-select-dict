@@ -1,15 +1,22 @@
 import {
-  AfterViewChecked,
-  AfterViewInit, Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output,
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
   TemplateRef
 } from '@angular/core';
 
 @Component({
   selector: 'app-select-dict-choices',
   templateUrl: './select-dict-choices.component.html',
-  styleUrls: ['./select-dict-choices.component.css']
+  styleUrls: ['./select-dict-choices.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SelectDictChoicesComponent implements OnChanges, OnInit, AfterViewChecked {
+export class SelectDictChoicesComponent implements OnChanges, OnInit {
   @Input() template: TemplateRef<any>;
   @Input() choices: any[];
   @Input() active: any;
@@ -47,7 +54,7 @@ export class SelectDictChoicesComponent implements OnChanges, OnInit, AfterViewC
     else if (this.activeIndex === 'nextPage') {
       highlightedChoice = this.dropDownMenuElem.querySelector('.next-page');
     }
-    else if (this.activeIndex !== -1){
+    else if (this.activeIndex !== -1) {
       highlightedChoice = choices[this.activeIndex];
     }
     else {
@@ -92,13 +99,5 @@ export class SelectDictChoicesComponent implements OnChanges, OnInit, AfterViewC
     else if (changesObj.activeIndex && !changesObj.choices) {
       this._ensureHighlightVisible();
     }
-  }
-
-  ngAfterViewChecked() {
-
-  }
-
-  ngDoCheck() {
-
   }
 }

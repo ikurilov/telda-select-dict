@@ -29,6 +29,7 @@
       (keydown.arrowdown)="activateNext()">
     <app-select-dict-choices
       [ngClass]="size === 'sm' ? 'sm' : ''"
+      [dropdownPosition]="dropdownPosition"
       *ngIf="opened"
       [choices]="items"
       [indexBy]="indexBy"

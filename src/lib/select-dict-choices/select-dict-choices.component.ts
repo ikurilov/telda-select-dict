@@ -25,6 +25,8 @@ export class SelectDictChoicesComponent implements OnChanges, OnInit {
   @Input() showPreviousPageButton: boolean;
   @Input() search;
   @Input() indexBy;
+  @Input() dropdownPosition: string;
+
 
   @Output() onSelect = new EventEmitter();
   @Output() nextPage = new EventEmitter();

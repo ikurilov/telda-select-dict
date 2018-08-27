@@ -1,4 +1,5 @@
-<div class="dropdown-menu show">
+<div class="dropdown-menu show"
+     [ngClass] = "{'dropdown-top': dropdownPosition === 'top'}">
   <a class="dropdown-item previous-page"
      [ngClass]="{'highlighted':this.activeIndex === 'prevPage'}"
      [hidden]="!showPreviousPageButton"

@@ -10,7 +10,8 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "build-module": "gulp clean:before-build && gulp inline-templates-and-css && ngc -p ./tsconfig-ngc.json && gulp clean:after-build"
+    "publish:lib": "npm publish release --registry http://192.168.11.101:8081/repository/npm-hosted/",
+    "release": "node ./publish.js && npm run build:lib && node ./clear.js && npm run publish:lib"
   },
   "private": true,
   "dependencies": {

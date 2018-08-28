@@ -59,3 +59,10 @@
 .form-control-sm .placeholder {
   height: 1.313rem;
 }
+
+.clear-cross{
+  text-align: right;
+  color: crimson;
+  float: right;
+  font-weight: bold;
+}

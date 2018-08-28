@@ -82,7 +82,7 @@ export class SelectDictComponent implements OnInit, AfterViewInit, ControlValueA
   selectDictContainerElement;
 
   propagateChange = (_: any) => {
-  };
+  }
 
   @ContentChild('selectMatch') matchTemplate;
   @ContentChild('selectChoices') choicesTemplate;

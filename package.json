@@ -14,7 +14,7 @@
     "release": "node ./publish.js && npm run build:lib && node ./clear.js && npm run publish:lib",
     "postversion": "npm run release"
   },
-  "private": true,
+  "private": false,
   "dependencies": {
     "@angular/animations": "^5.0.2",
     "@angular/common": "^5.0.2",

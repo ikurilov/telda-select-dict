@@ -61,12 +61,10 @@
 }
 
 .clear-cross{
-  text-align: right;
-  color: #495057;
-  float: right;
-  font-weight: bold;
   position: absolute;
   right: 1.8rem;
-  display: inline;
-  vertical-align: middle;
+  display: inline-flex;
+  height: 100%;
+  top: 0;
+  align-items: center;
 }

@@ -15,11 +15,11 @@ import {
 } from '@angular/core';
 import {findIndex} from 'lodash/array';
 import {cloneDeep} from 'lodash/lang';
-import {assign} from 'lodash/object'
+import {assign} from 'lodash/object';
 
 import {Subject} from 'rxjs/Subject';
 import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/toPromise'
+import 'rxjs/add/operator/toPromise';
 import {SelectDictChoicesComponent} from './select-dict-choices/select-dict-choices.component';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {SelectDictPipe} from './select-dict.pipe';
@@ -29,7 +29,7 @@ import {SelectDictService} from './select-dict.service';
 export interface IDictListContainer {
   total: number;
   size: number;
-  list: any[]
+  list: any[];
 }
 
 @Component({
@@ -83,7 +83,7 @@ export class SelectDictComponent implements OnInit, AfterViewInit, ControlValueA
   selectDictContainerElement;
 
   propagateChange = (_: any) => {
-  };
+  }
 
   @ContentChild('selectMatch') matchTemplate;
   @ContentChild('selectChoices') choicesTemplate;
@@ -141,7 +141,7 @@ export class SelectDictComponent implements OnInit, AfterViewInit, ControlValueA
 
   /*TODO create this functionality*/
   onClear() {
-
+    this.propagateChange(this.selected = null);
   }
 
   onSearch(value: string) {

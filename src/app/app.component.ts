@@ -17,7 +17,7 @@ export class AppComponent {
     this.selectedItem = {
       id: 0,
       nameM: 'CHANGED!!'
-    }
+    };
   }
 
   changed(item) {

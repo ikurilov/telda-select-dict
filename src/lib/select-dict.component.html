@@ -13,7 +13,7 @@
                    [ngTemplateOutletContext]="{$implicit: selected}">
       </ng-template>
       <div class="placeholder" *ngIf="!selected">{{placeholder || label}}</div>
-      <div *ngIf="selected" class="clear-cross" (click)="onClear()"><i class="fa fa-times"></i></div>
+      <div *ngIf="selected && showCloseBtn" class="clear-cross" (click)="onClear()"><i class="fa fa-times"></i></div>
     </div>
     <input
       #searchInput

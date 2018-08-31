@@ -56,7 +56,7 @@ export class SelectDictComponent implements OnInit, AfterViewInit, ControlValueA
   @Input() size: 'sm' | null;
   @Input() disabled = false;
   @Input() dropdownPosition: string;
-
+  @Input() showCloseBtn = true;
   @Output() update = new EventEmitter();
 
   dictFilter = new SelectDictPipe();

@@ -1,20 +1,24 @@
 <div class="dropdown-menu show"
-     [ngClass] = "{'dropdown-top': dropdownPosition === 'top'}">
-  <a class="dropdown-item previous-page"
-     [ngClass]="{'highlighted':this.activeIndex === 'prevPage'}"
-     [hidden]="!showPreviousPageButton"
-     (click)="getPrevPage()"><<<</a>
-  <a class="dropdown-item choice hide-overflowed-text"
-     [appHighlightChoice]="i === activeIndex"
-     *ngFor="let item of choices; trackBy: trackByDictionary; let i = index"
-     (click)="selectItem($event, item)">
-    <ng-template
-      [ngTemplateOutlet]="template"
-      [ngTemplateOutletContext]="{$implicit: item}">
-    </ng-template>
-  </a>
-  <a class="dropdown-item next-page"
-     [hidden]="!showNextPageButton"
-     [ngClass]="{'highlighted':this.activeIndex === 'nextPage'}"
-     (click)="getNextPage()">>>></a>
+     [ngClass]="{'dropdown-top': dropdownPosition === 'top'}">
+  <virtual-scroll
+    class="virtual-scroll-container"
+    [scrollAnimationTime]="0"
+    [scrollThrottlingTime]="100"
+    [items]="choices"
+    (vsChange)="onChange($event)"
+    (vsUpdate)="onUpdate($event)">
+    <a class="dropdown-item choice hide-overflowed-text"
+       [ngClass]="{'highlighted': highlighted?.id === item.id}"
+       *ngFor="let item of scrollItems; trackBy: trackByDictionary; let i = index"
+       (click)="selectItem($event, item)">
+      <ng-template
+        [ngTemplateOutlet]="template"
+        [ngTemplateOutletContext]="{$implicit: item}">
+      </ng-template>
+    </a>
+
+        <div *ngIf="loading" class="loader">Loading...</div>
+
+  </virtual-scroll>
+
 </div>

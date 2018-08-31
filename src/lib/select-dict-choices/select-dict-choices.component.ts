@@ -7,8 +7,10 @@ import {
   OnChanges,
   OnInit,
   Output,
-  TemplateRef
+  TemplateRef,
+  ViewChild
 } from '@angular/core';
+import {VirtualScrollComponent} from 'angular2-virtual-scroll';
 
 @Component({
   selector: 'app-select-dict-choices',
@@ -26,13 +28,19 @@ export class SelectDictChoicesComponent implements OnChanges, OnInit {
   @Input() search;
   @Input() indexBy;
   @Input() dropdownPosition: string;
+  @Input() loading: boolean;
 
+  scrollItems;
 
   @Output() onSelect = new EventEmitter();
-  @Output() nextPage = new EventEmitter();
-  @Output() prevPage = new EventEmitter();
+  @Output() nextChunk = new EventEmitter();
+
+  highlighted = null;
 
   dropDownMenuElem;
+
+  @ViewChild(VirtualScrollComponent)
+  private virtualScroll: VirtualScrollComponent;
 
   constructor(private ref: ElementRef) {
 
@@ -46,60 +54,42 @@ export class SelectDictChoicesComponent implements OnChanges, OnInit {
     this.onSelect.emit({$event, item});
   }
 
-  _ensureHighlightVisible() {
-    const choices = this.dropDownMenuElem.querySelectorAll('.choice');
-    if (!choices.length) return;
-    let highlightedChoice;
-    if (this.activeIndex === 'prevPage') {
-      highlightedChoice = this.dropDownMenuElem.querySelector('.previous-page');
-    }
-    else if (this.activeIndex === 'nextPage') {
-      highlightedChoice = this.dropDownMenuElem.querySelector('.next-page');
-    }
-    else if (this.activeIndex !== -1) {
-      highlightedChoice = choices[this.activeIndex];
-    }
-    else {
-      this.scrollToTop();
-      return;
-    }
-
-    const posY = highlightedChoice.offsetTop + highlightedChoice.clientHeight - this.dropDownMenuElem.scrollTop;
-    const height = this.dropDownMenuElem.offsetHeight;
-
-    if (posY > height) {
-      this.dropDownMenuElem.scrollTop += posY - height;
-    } else if (posY < highlightedChoice.clientHeight) {
-      if (this.activeIndex === 0) {
-        this.dropDownMenuElem.scrollTop = 0; //To make group header visible when going all the way up
-      } else {
-        this.dropDownMenuElem.scrollTop -= highlightedChoice.clientHeight - posY;
-      }
-    }
-  }
-
-  scrollToTop() {
-    this.dropDownMenuElem.scrollTop = 0;
-  }
-
   trackByDictionary(index, item) {
     return item ? item[this.indexBy] : null;
   }
 
-  getNextPage() {
-    this.nextPage.emit();
+  getNextChunk() {
+    this.nextChunk.emit();
   }
 
-  getPrevPage() {
-    this.prevPage.emit();
+  onUpdate(data) {
+    this.scrollItems = data;
   }
 
-  ngOnChanges(changesObj) {
-    if (changesObj.activeIndex && changesObj.choices) {
-      setTimeout(() => this._ensureHighlightVisible());
+  onChange(event) {
+    if (event.end !== this.choices.length - 1 || this.loading) return;
+    this.getNextChunk();
+  }
+
+  scrollToIndex(idx) {
+    const highlighted = this.choices[idx];
+    this.virtualScroll.scrollToIndex(idx, undefined, undefined, 0);
+    this.highlighted = highlighted;
+  }
+
+  ngOnChanges(changes) {
+    if (changes.choices
+      && changes.choices.previousValue
+      && !changes.choices.previousValue.length
+      && this.active) {
+      const activeIdx = this.choices.findIndex(item => item.id === this.active.id);
+      this.scrollToIndex(activeIdx)
     }
-    else if (changesObj.activeIndex && !changesObj.choices) {
-      this._ensureHighlightVisible();
-    }
+    /*    if (changesObj.activeIndex && changesObj.choices) {
+          setTimeout(() => this._ensureHighlightVisible());
+        }
+        else if (changesObj.activeIndex && !changesObj.choices) {
+          this._ensureHighlightVisible();
+        }*/
   }
 }

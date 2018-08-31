@@ -13,18 +13,15 @@ import {
   Output,
   ViewChild
 } from '@angular/core';
-import {findIndex} from 'lodash/array';
-import {cloneDeep} from 'lodash/lang';
-import {assign} from 'lodash/object';
 
 import {Subject} from 'rxjs/Subject';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
 import {SelectDictChoicesComponent} from './select-dict-choices/select-dict-choices.component';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
-import {SelectDictPipe} from './select-dict.pipe';
-import {Subscription} from 'rxjs/Subscription';
 import {SelectDictService} from './select-dict.service';
+import 'rxjs/operators/throttleTime'
+import 'rxjs/add/operator/throttleTime';
 
 export interface IDictListContainer {
   total: number;
@@ -56,34 +53,31 @@ export class SelectDictComponent implements OnInit, AfterViewInit, ControlValueA
   @Input() size: 'sm' | null;
   @Input() disabled = false;
   @Input() dropdownPosition: string;
+  @Input() showCloseBtn = true;
 
   @Output() update = new EventEmitter();
-
-  dictFilter = new SelectDictPipe();
 
   focusMatch = new Subject();
   focusSearch = new Subject();
 
   items: any[] = [];
-  _items: any[] = [];
+  active = null;
 
   search: string;
-  active = null;
-  activeIndex: 'nextPage' | 'prevPage' | number = -1;
 
-  initialQuery = true;
-  longList = false;
   listSize = 50;
   page = 0;
-  allInMemory = false;
-  lastRemoteSearch: string;
+  endOfList = false;
+  loading = false;
 
   opened = false;
 
   selectDictContainerElement;
 
+  highlightElement = new Subject<'next' | 'prev'>();
+
   propagateChange = (_: any) => {
-  }
+  };
 
   @ContentChild('selectMatch') matchTemplate;
   @ContentChild('selectChoices') choicesTemplate;
@@ -103,6 +97,9 @@ export class SelectDictComponent implements OnInit, AfterViewInit, ControlValueA
   }
 
   ngOnInit() {
+    this.highlightElement.throttleTime(50).subscribe(direction => {
+      this.highlightItem(direction);
+    })
   }
 
   ngAfterViewInit() {
@@ -116,164 +113,84 @@ export class SelectDictComponent implements OnInit, AfterViewInit, ControlValueA
     this.closeChoices();
   }
 
-  onOpen($event?) {
+  onOpen() {
     if (!this.disabled) {
       this.opened = true;
       this.active = this.selected;
       this.focusSearch.next();
-      this.request();
     }
   }
 
   closeChoices() {
     this.opened = false;
-    this.resetComponent();
     this.focusMatch.next();
+    this.resetComponent();
   }
 
   resetComponent() {
     this.items = [];
     this.active = null;
-    this.activeIndex = -1;
+    this.endOfList = false;
     this.page = 0;
     this.search = '';
   }
 
-  /*TODO create this functionality*/
   onClear() {
     this.propagateChange(this.selected = null);
   }
 
-  onSearch(value: string) {
-    if (this.search !== value) {
-      this.search = value;
-      this.searchItem();
-    }
-  }
-
-  searchItem() {
+  onSearch(event) {
+    this.search = event;
     this.page = 0;
-    if (this.needToLoadData()) this.request();
-    else {
-      this.items = this.dictFilter.transform(this._items, this.filterBy, this.search);
-      if (this.active) {
-        this.activeIndex = this.getActiveIndex();
-      }
-      else {
-        this.activeIndex = -1;
-      }
-    }
+    this.request().subscribe(data => {
+      this.items = data;
+      this.choicesComponent.scrollToIndex(0);
+    });
   }
 
   selectHighlighted() {
-    if (this.activeIndex === 'prevPage') {
-      this.getPrevPage();
-    }
-    else if (this.activeIndex === 'nextPage') {
-      this.getNextPage();
-    }
-    else {
-      this.onSelect({$event: null, item: this.active});
-    }
+    this.onSelect({$event: null, item: this.active});
   }
 
-  activateNext() {
-    this.setActiveItem('next');
+  highlight(direction: 'prev' | 'next') {
+    this.highlightElement.next(direction);
   }
 
-  activatePrev() {
-    this.setActiveItem('prev');
-  }
-
-  request(): Subscription {
+  request() {
     let params = {
       [this.filterBy]: this.search ? this.search : '',
       count: this.listSize,
-      from: this.page * this.listSize
+      from: this.page * this.listSize,
+      ...this.options
     };
 
-    assign(params, this.options);
-
-    return this.dictService.getPage(this.url, params)
-      .subscribe((container: IDictListContainer) => {
-        if (this.initialQuery) {
-          this.initialQuery = false;
-          this.longList = container.total < 0 || container.total > container.size;
-        }
-        this._items = container.list;
-        this.items = cloneDeep(this._items);
-
-        this.lastRemoteSearch = <string>params[this.filterBy];
-        this.allInMemory = this.page === 0 && container.size < this.listSize;
-
-        this.activeIndex = this.active ? this.getActiveIndex() : -1;
-
-        this.choicesComponent.scrollToTop();
-        this.choicesComponent._ensureHighlightVisible();
-
-        this.cdr.markForCheck();
-      });
+    return this.dictService.getPage(this.url, params).map((container: IDictListContainer) => {
+      this.endOfList = container.size < this.listSize;
+      this.page++;
+      this.cdr.markForCheck();
+      return container.list;
+    });
   }
 
-  getNextPage() {
-    this.page++;
-    this.focusSearch.next();
-    this.request();
+  getNextChunk() {
+    if (this.endOfList) return;
+    this.loading = true;
+    this.request().subscribe(data => {
+      this.loading = false;
+      this.items = this.items.concat(data);
+    });
   }
 
-  getPrevPage() {
-    this.page--;
-    this.focusSearch.next();
-    this.request();
-  }
-
-  setActiveItem(direction: ('next' | 'prev')) {
-    let itemsLength = this.items.length;
-    if (this.activeIndex === -1) {
-      if (this.longList && this.page !== 0) {
-        this.activeIndex = 'prevPage';
-      }
-      else if (itemsLength) {
-        this.activeIndex = 0;
-      }
+  highlightItem(direction: ('next' | 'prev')) {
+    let activeIdx = 0;
+    if (this.active) {
+      activeIdx = this.items.findIndex(item => item.id === this.active.id);
+      direction === 'next' ? activeIdx++ : activeIdx--;
+      if (activeIdx < 0) activeIdx = 0;
+      if (activeIdx > this.items.length - 1) activeIdx = this.items.length - 1;
     }
-    else {
-      // previous item
-      if (direction === 'prev') {
-        if (typeof this.activeIndex !== 'string') {
-          if (this.activeIndex !== 0) {
-            this.activeIndex--;
-          }
-          else if (this.longList && this.page !== 0) {
-            this.activeIndex = 'prevPage';
-          }
-        }
-        else if (this.activeIndex === 'nextPage') {
-          this.activeIndex = itemsLength - 1;
-        }
-      }
-      // next item
-      else {
-        if (typeof this.activeIndex !== 'string') {
-          if (this.activeIndex !== itemsLength - 1) {
-            this.activeIndex++;
-          }
-          // if next button available
-          else if (this.longList && !(itemsLength < this.listSize)) {
-            this.activeIndex = 'nextPage';
-          }
-        }
-        else if (this.activeIndex === 'prevPage') {
-          this.activeIndex = 0;
-        }
-      }
-    }
-
-    this.active = this.activeIndex !== -1 && typeof this.activeIndex !== 'string' ? this.items[this.activeIndex] : null;
-  }
-
-  getActiveIndex() {
-    return findIndex(this.items, item => item[this.indexBy] === this.active[this.indexBy]);
+    this.active = this.items[activeIdx];
+    this.choicesComponent.scrollToIndex(activeIdx);
   }
 
   writeValue(value: any) {
@@ -287,11 +204,4 @@ export class SelectDictComponent implements OnInit, AfterViewInit, ControlValueA
 
   registerOnTouched() {
   }
-
-  needToLoadData() {
-    if (this.longList) {
-      return !this.allInMemory || this.search.indexOf(this.lastRemoteSearch) === -1
-    }
-    return false;
-  };
 }

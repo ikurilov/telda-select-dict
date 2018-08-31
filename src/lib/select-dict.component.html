@@ -24,10 +24,11 @@
       appSelectSearch
       [focus]="focusSearch"
       (blur)="outsideClickHandler($event)"
-      (keyup)="onSearch(searchInput.value)"
+      (ngModelChange)="onSearch($event)"
+      [(ngModel)]="search"
       (keydown.enter)="selectHighlighted()"
-      (keydown.arrowup)="activatePrev()"
-      (keydown.arrowdown)="activateNext()">
+      (keydown.arrowup)="highlight('prev')"
+      (keydown.arrowdown)="highlight('next')">
     <app-select-dict-choices
       [ngClass]="size === 'sm' ? 'sm' : ''"
       [dropdownPosition]="dropdownPosition"
@@ -35,14 +36,11 @@
       [choices]="items"
       [indexBy]="indexBy"
       [search]="search"
-      [showPreviousPageButton]="longList && page !== 0"
-      [showNextPageButton]="longList && !(items?.length < listSize)"
       [active]="active"
-      [activeIndex]="activeIndex"
+      [loading]="loading"
       [template]="choicesTemplate"
       (onSelect)="onSelect($event)"
-      (nextPage)="getNextPage()"
-      (prevPage)="getPrevPage()"
+      (nextChunk)="getNextChunk()"
     ></app-select-dict-choices>
   </div>
 </ng-template>

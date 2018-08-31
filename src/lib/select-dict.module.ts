@@ -9,6 +9,7 @@ import {SelectSearchDirective} from './select-search.directive';
 import {SelectDictComponent} from './select-dict.component';
 import {SelectDictService} from './select-dict.service';
 import {HttpClientModule} from '@angular/common/http';
+import {VirtualScrollModule} from 'angular2-virtual-scroll';
 
 export {SelectDictComponent} from './select-dict.component';
 
@@ -17,7 +18,8 @@ export {SelectDictComponent} from './select-dict.component';
     CommonModule,
     HttpClientModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    VirtualScrollModule
   ],
   declarations: [
     SelectDictComponent,

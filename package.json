@@ -10,7 +10,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "publish:lib": "npm publish release --registry http://192.168.11.101:8081/repository/npm-hosted/",
+    "publish:lib": "npm publish release --registry http://ao.telda.ru:8081/nexus/repository/npm-hosted/",
     "release": "node ./publish.js && npm run build:lib && node ./clear.js && npm run publish:lib",
     "postversion": "npm run release"
   },

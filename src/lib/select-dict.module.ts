@@ -27,12 +27,17 @@ export {SelectDictComponent} from './select-dict.component';
     SelectDictPipe,
     HighlightChoiceDirective
   ],
-  providers: [
-    SelectDictService
-  ],
   exports: [
     SelectDictComponent
   ]
 })
 export class SelectDictModule {
+  static forRoot() {
+    return {
+      ngModule: SelectDictModule,
+      providers: [
+        SelectDictService
+      ],
+    }
+  }
 }

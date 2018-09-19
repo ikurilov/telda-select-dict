@@ -13,7 +13,7 @@ import {SelectDictModule, SelectDictService} from 'lib';
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
-    SelectDictModule
+    SelectDictModule.forRoot()
   ],
   providers: [
     {provide: SelectDictService, useClass: CustomDictService}
